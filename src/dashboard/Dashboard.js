@@ -6,11 +6,6 @@ import Controls from '../controls/Controls';
 import { toggleClosed, toggleLocked } from '../actions';
 
 class Dashboard extends React.Component {
-  // state = {
-  //   locked: false,
-  //   closed: false,
-  // };
-
   render() {
     const { closed, locked, toggleLocked, toggleClosed } = this.props;
 
@@ -26,14 +21,6 @@ class Dashboard extends React.Component {
       </>
     );
   }
-
-  // toggleLocked = () => {
-  //   this.setState(prev => ({ locked: !prev.locked }));
-  // };
-
-  // toggleClosed = () => {
-  //   this.setState(prev => ({ closed: !prev.closed }));
-  // };
 }
 
 const mapStateToProps = ({ closed, locked }) => ({
