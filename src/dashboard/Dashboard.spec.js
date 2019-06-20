@@ -1,16 +1,30 @@
 import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/react/cleanup-after-each';
+
 import Dashboard from './Dashboard';
+import reducer from '../reducers';
+
+function renderWithRedux(
+  ui,
+  { initialState, store = createStore(reducer, initialState) } = {}
+) {
+  return {
+    ...render(<Provider store={store}>{ui}</Provider>),
+    store,
+  }
+}
 
 describe('<Dashboard />', () => {
   it('should exist', () => {
-    const component = render(<Dashboard />);
+    const component = renderWithRedux(<Dashboard />);
     expect(component).toBeTruthy();
   });
 
   it('should render display correctly when clicking "Close Gate"', () => {
-    const { queryByText } = render(<Dashboard />);
+    const { queryByText } = renderWithRedux(<Dashboard />);
     const closedBtn = queryByText(/close gate/i);
     const closedDisplay = queryByText(/open/i);
     expect(closedBtn).toBeTruthy();
@@ -33,7 +47,7 @@ describe('<Dashboard />', () => {
   });
 
   it('should render display correctly when clicking "Lock Gate"', () => {
-    const { queryByText } = render(<Dashboard />);
+    const { queryByText } = renderWithRedux(<Dashboard />);
     const closedBtn = queryByText(/close gate/i);
     expect(closedBtn).toBeTruthy();
     fireEvent.click(closedBtn);
